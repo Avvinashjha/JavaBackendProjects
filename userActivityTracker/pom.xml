@@ -3,11 +3,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.dailycoder</groupId>
-    <artifactId>dcProjects</artifactId>
+    <groupId>com.springlab</groupId>
+    <artifactId>springlab</artifactId>
     <version>1.0.0</version>
   </parent>
-  <groupId>com.dailycoder.userActivityTracker</groupId>
+  <groupId>com.springlab.userActivityTracker</groupId>
   <artifactId>userActivityTracker</artifactId>
   <version>0.0.1</version>
   <name>userActivityTracker</name>

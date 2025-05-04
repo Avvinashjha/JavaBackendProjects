@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0">
   <parent>
-    <groupId>com.dailycoder</groupId>
-    <artifactId>dcProjects</artifactId>
+    <groupId>com.springlab</groupId>
+    <artifactId>springlab</artifactId>
     <version>1.0.0</version>
   </parent>
 
@@ -12,22 +12,22 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.dailycoder.authManager</groupId>
+      <groupId>com.springlab.authManager</groupId>
       <artifactId>authManager</artifactId>
       <version>0.0.1</version>
     </dependency>
     <dependency>
-      <groupId>com.dailycoder.cricInfo</groupId>
+      <groupId>com.springlab.cricInfo</groupId>
       <artifactId>cricInfo</artifactId>
       <version>0.0.1</version>
     </dependency>
     <dependency>
-      <groupId>com.dailycoder.cacheManager</groupId>
+      <groupId>com.springlab.cacheManager</groupId>
       <artifactId>cacheManager</artifactId>
       <version>0.0.1</version>
     </dependency>
     <dependency>
-      <groupId>com.dailycoder.libraryManagement</groupId>
+      <groupId>com.springlab.libraryManagement</groupId>
       <artifactId>libraryManagement</artifactId>
       <version>0.0.1</version>
     </dependency>
@@ -37,12 +37,12 @@
       <version>0.0.1</version>
     </dependency>
     <dependency>
-      <groupId>com.dailycoder.kafkaDemo</groupId>
+      <groupId>com.springlab.kafkaDemo</groupId>
       <artifactId>kafkaDemo</artifactId>
       <version>0.0.1</version>
     </dependency>
     <dependency>
-      <groupId>com.dailycoder.customMessageQueue</groupId>
+      <groupId>com.springlab.customMessageQueue</groupId>
       <artifactId>customMessageQueue</artifactId>
       <version>1.0.0</version>
     </dependency>
@@ -64,7 +64,7 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>3.2.0</version> <!-- or your Spring Boot version -->
         <configuration>
-          <mainClass>com.dailycoder.server.App</mainClass>
+          <mainClass>com.springlab.server.App</mainClass>
         </configuration>
         <executions>
           <execution>
