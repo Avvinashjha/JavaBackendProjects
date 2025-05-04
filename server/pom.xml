@@ -36,11 +36,11 @@
       <artifactId>userActivityTracker</artifactId>
       <version>0.0.1</version>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>com.dailycoder.kafkaDemo</groupId>-->
-<!--      <artifactId>kafkaDemo</artifactId>-->
-<!--      <version>0.0.1</version>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>com.dailycoder.kafkaDemo</groupId>
+      <artifactId>kafkaDemo</artifactId>
+      <version>0.0.1</version>
+    </dependency>
     <dependency>
       <groupId>com.dailycoder.customMessageQueue</groupId>
       <artifactId>customMessageQueue</artifactId>

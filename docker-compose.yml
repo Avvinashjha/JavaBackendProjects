@@ -1,12 +1,9 @@
-version: '3.8'
-
 services:
   kafka-1:
-    image: apache/kafka
+    image: apache/kafka:latest
     container_name: kafka-1
     ports:
-      - "9092:9092" # Host communicate with container
-      - "9093:9093" # Container communicate with each other
+      - "9092:9092"
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
@@ -15,43 +12,41 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_LOGS_DIR: /tmp/kraft-combined-logs
+      KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
     networks:
       - kafka-net
 
   kafka-2:
-    image: apache/kafka
+    image: apache/kafka:latest
     container_name: kafka-2
     ports:
-      - "9094:9094" # Host communicate with container
-      - "9095:9095" # Container communicate with each other
+      - "9094:9094"
     environment:
       KAFKA_NODE_ID: 2
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-1:9093,2@kafka-2:9095,3@kafka-3:9097
-      KAFKA_LISTENERS: PLAINTEXT://kafka-2:9094,CONTROLLER://kafka-2:9095
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094,CONTROLLER://0.0.0.0:9095
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9094
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_LOGS_DIR: /tmp/kraft-combined-logs
+      KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
     networks:
       - kafka-net
 
   kafka-3:
-    image: apache/kafka
+    image: apache/kafka:latest
     container_name: kafka-3
     ports:
-      - "9096:9096" # Host communicate with container
-      - "9097:9097" # Container communicate with each other
+      - "9096:9096"
     environment:
       KAFKA_NODE_ID: 3
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-1:9093,2@kafka-2:9095,3@kafka-3:9097
-      KAFKA_LISTENERS: PLAINTEXT://kafka-3:9096,CONTROLLER://kafka-3:9097
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9096,CONTROLLER://0.0.0.0:9097
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:9096
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_LOGS_DIR: /tmp/kraft-combined-logs
+      KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
     networks:
       - kafka-net
 
@@ -60,7 +55,6 @@ services:
     container_name: kafdrop
     ports:
       - "3005:9000"
-
     environment:
       KAFKA_BROKERCONNECT: kafka-1:9092,kafka-2:9094,kafka-3:9096
     depends_on:
@@ -72,40 +66,21 @@ services:
 
   springboot-server:
     build:
-      context: ./ # assumes your Dockerfile is here
-      dockerfile: Dockerfile
+      context: ./server   # path to your server module (where Dockerfile is)
     container_name: springboot-server
     ports:
       - "9000:9000"
     environment:
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092
       SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/dcProjects
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: avinash.jh
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-    depends_on:
-      - kafka-1
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9094,kafka-3:9096
     networks:
       - kafka-net
     extra_hosts:
       - "host.docker.internal:host-gateway"   # important for accessing local MySQL
 
-
 networks:
   kafka-net:
     driver: bridge
-
-# This docker-compose file is used to create a Kafka cluster with 3 brokers and a Kafdrop UI.
-# The Kafka brokers are configured to use KRaft mode, which is a new mode of operation for Kafka that does not require ZooKeeper.
-# The Kafdrop UI is used to view the Kafka cluster and its topics.
-# To start the cluster, run the following command:
-# docker-compose up -d
-# To stop the cluster, run the following command:
-# docker-compose down
-# To view the Kafdrop UI, open your web browser and go to http://localhost:3005
-# To view the Kafka cluster, open your web browser and go to http://localhost:3005
-# To view the Kafka topics, open your web browser and go to http://localhost:3005/#/topics
-# To view the Kafka consumers, open your web browser and go to http://localhost:3005/#/consumers
-# To view the Kafka producers, open your web browser and go to http://localhost:3005/#/producers
-# To view the Kafka brokers, open your web browser and go to http://localhost:3005/#/brokers
-# To view the Kafka partitions, open your web browser and go to http://localhost:3005/#/partitions
